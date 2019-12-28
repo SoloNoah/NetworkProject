@@ -1,0 +1,39 @@
+﻿@using proj.Models
+@{
+    ViewBag.Title = "enterCourse";
+}
+
+<h2>enterCourse</h2>
+
+<div>
+
+    <form action="enterCourse" method="post">
+        <label>Course Id:</label> <input id="CourseId" name="CourseId" type="text" />
+        <br />
+        <label>Course Name:</label> <input id="CourseName" name="CourseName" type="text" />
+        <br />
+        <input id="Submit" type="submit" value="Add Customer" />
+    </form>
+
+</div>
+
+<table>
+    <tr>
+        <th>Course Id</th>
+        <th>Course Name</th>
+    </tr>
+
+    @{
+        if (Model.courses != null)
+        {
+            foreach (Courses obj in Model.courses)
+            {
+                <tr>
+                    <td>@obj.CourseId</td>
+                    <td>@obj.CourseName</td>
+
+                </tr>
+            }
+        }
+    }
+</table>
