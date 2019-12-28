@@ -23,7 +23,7 @@ namespace proj.Controllers
             string username = Request.Form["Username"].ToString();
             string password = Request.Form["Password"].ToString();
             List<User> objUsers = (from x
-                                  in userDal.users
+                                   in userDal.users
                                    where x.Username.Equals(username)
                                    select x).ToList<User>();
             if (objUsers.Any())
@@ -45,17 +45,25 @@ namespace proj.Controllers
             }
             return View("Login");
         }
-        public ActionResult showCourses()
+        public ActionResult StudentActions()
         {
-            CoursesDal coursesDal = new CoursesDal();
-            List<Courses> objCourses = (from x
-                                     in coursesDal.courses
-                                        select x).ToList<Courses>();
-            CoursesViewModel cvm = new CoursesViewModel();
-            cvm.courses = objCourses;
-            return View("showCourses", cvm);
+            if(Request.Form["schedule"] != null)
+            {
+                CoursesDal coursesDal = new CoursesDal();
+                List<Courses> objCourses = (from x
+                                            in coursesDal.courses
+                                            select x).ToList<Courses>();
+                CoursesViewModel cvm = new CoursesViewModel();
+                cvm.courses = objCourses;
+                return View("showCourses", cvm);
+            }
+            else
+            {
+                return View("Login");
+            }
+            
         }
-        public ActionResult enterCourse()
+        public ActionResult showExam()
         {
             CoursesDal coursesDal = new CoursesDal();
             List<Courses> objCourses = coursesDal.courses.ToList<Courses>();
