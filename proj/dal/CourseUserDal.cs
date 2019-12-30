@@ -6,13 +6,13 @@ using System.Data.Entity;
 using proj.Models;
 namespace proj.dal
 {
-    public class CoursesDal : DbContext
+    public class CourseUserDal:DbContext
     {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Courses>().ToTable("tblCourses");
+            modelBuilder.Entity<CourseUser>().ToTable("tblCourseUsername");
         }
-        public DbSet<Courses> Courses { get; set; }
+        public DbSet<CourseUser> CoursesAndUsers { get; set; }
     }
 }

@@ -20,11 +20,12 @@ namespace proj.Controllers
         public ActionResult getPermission()
         {
             UserDal userDal = new UserDal();
-            string username = Request.Form["Username"].ToString();
+            String loggedUsername = Request.Form["Username"].ToString();
+            TempData["loggedUsername"] = loggedUsername;
             string password = Request.Form["Password"].ToString();
             List<User> objUsers = (from x
                                    in userDal.users
-                                   where x.Username.Equals(username)
+                                   where x.Username.Equals(loggedUsername) 
                                    select x).ToList<User>();
             if (objUsers.Any())
             {
@@ -45,19 +46,35 @@ namespace proj.Controllers
             }
             return View("Login");
         }
-        public ActionResult StudentActions()
+        public ActionResult StudentActions(String loggedUsername)
         {
             if(Request.Form["schedule"] != null)
             {
+                CourseUserDal courseUser = new CourseUserDal();
                 CoursesDal coursesDal = new CoursesDal();
-                List<Courses> objCourses = (from x
-                                            in coursesDal.courses
-                                            select x).ToList<Courses>();
+               string t;
+                List<Courses> userCourses = new List<Courses>();
+                string loggedUser = TempData["loggedUsername"].ToString();
+                List<string> c_id = (from y in courseUser.CoursesAndUsers
+                                     where y.Username.Equals(loggedUser)
+                                     select y.CourseId).ToList<string>();
+
+                int i = 0;
+                while (i < c_id.Count())
+                {
+                    t = c_id[i];
+                    userCourses.Add((from y in coursesDal.Courses
+                                     where y.CourseId.Equals(t)
+                                     select y).SingleOrDefault());
+                    i++;
+                }
+
+
                 CoursesViewModel cvm = new CoursesViewModel();
-                cvm.courses = objCourses;
+                cvm.courses = userCourses;
                 return View("showCourses", cvm);
             }
-            else
+            else 
             {
                 return View("Login");
             }
@@ -65,11 +82,8 @@ namespace proj.Controllers
         }
         public ActionResult showExam()
         {
-            CoursesDal coursesDal = new CoursesDal();
-            List<Courses> objCourses = coursesDal.courses.ToList<Courses>();
-            CoursesViewModel cvm = new CoursesViewModel();
-            cvm.courses = objCourses;
-            return View("showCourses", cvm);
+           
+            return View("Login");
 
         }
     }
