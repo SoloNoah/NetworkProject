@@ -1,0 +1,31 @@
+﻿@using proj.Models
+@{
+    ViewBag.Title = "ShowExams";
+}
+
+<div><b>Exams</b><br /></div>
+<table class="table table-bordered table-responsive table-hover">
+    <tr bgcolor="#a2b9bc">
+        <th>Moed</th>
+        <th>Course Id </th>
+        <th>Course Name </th>
+        <th>Day</th>
+        <th>Hour </th>
+        <th>Room </th>
+        
+
+    </tr>
+    @foreach (Exams obj in Model.exams)
+    {
+    <tr bgcolor="#b2ad7f">
+        <td>@obj.Moed</td>
+        <td>@obj.CourseId</td>
+        <td>@obj.CourseName</td>
+        <td>@obj.Day</td>
+        <td>@obj.Hour</td>
+        <td>@obj.Room</td>
+
+
+    </tr>
+    }
+</table>
