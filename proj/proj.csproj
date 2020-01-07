@@ -164,6 +164,7 @@
     <Compile Include="dal\StudentCoursesDal.cs" />
     <Compile Include="dal\ExamsDal.cs" />
     <Compile Include="dal\LecturerGotStudsDal.cs" />
+    <Compile Include="dal\StudentDal.cs" />
     <Compile Include="dal\UserDal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -228,6 +229,9 @@
     <Content Include="Views\Login\enterCourse.cshtml" />
     <Content Include="Views\Login\ShowExams.cshtml" />
     <Content Include="Views\Login\ShowStudsForLect.cshtml" />
+    <Content Include="Views\Login\enter.cshtml" />
+    <Content Include="Views\Login\manageStudents.cshtml" />
+    <Content Include="Views\Login\FaMemberActions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,42 @@
+﻿@using proj.Models
+@{
+    ViewBag.Title = "manageStudents";
+}
+
+<h2>manageStudents</h2>
+<table class="table table-bordered table-responsive table-hover">
+    <tr bgcolor="#a2b9bc">
+        <th>Id </th>
+        <th>First Name </th>
+        <th>Last Name</th>
+
+
+    </tr>
+    @foreach (Student obj in Model.studentList)
+    {
+        <tr bgcolor="#b2ad7f">
+            <td>@obj.Id</td>
+            <td>@obj.FirstName</td>
+            <td>@obj.LastName</td>
+
+
+        </tr>
+    }
+</table>
+
+<form method="post" action="update" onsubmit="SetData()">
+    <select name="studentId" id="studentId">
+        @foreach (Student obj in Model.studentList)
+        {
+            <option value=@obj.Id>@obj.Id</option>
+        }
+    </select>
+    <select name="courseId" id="courseId">
+        @foreach (Courses obj in Model.courses)
+        {
+            <option value=@obj.CourseId>@obj.CourseId</option>
+        }
+    </select>
+    <input type="submit" value="update" />
+</form>
+

@@ -1,29 +1,24 @@
 ﻿@using proj.Models
 
 @{
-    ViewBag.Title = "studentsListAssosCourses";
+    ViewBag.Title = "ShowStusForLect";
 }
 
 <h2>studentsListAssosCourses</h2>
 
-<div><b>Your students in courses</b><br /></div>
-<table class="table table-bordered table-responsive table-hover">
-    <tr bgcolor="#a2b9bc">
-        <th>Username </th>
-        <th>Id </th>
-        <th>First Name</th>
-        <th>Last Name </th>
+<div><b>choose student from course</b><br /></div>
 
-    </tr>
-    @foreach (Student obj in Model.studentList)
-    {
-        <tr bgcolor="#b2ad7f">
-            <td>@obj.Username</td>
-            <td>@obj.Id</td>
-            <td>@obj.FirstName</td>
-            <td>@obj.LastName</td>
-        </tr>
-    }
-</table>
+
+<form method ="post" action="enter" onsubmit="SetData()">
+    <select name="courseId" id="courseId">
+        @foreach (Courses obj in Model.courses)
+        {
+            <option value=@obj.CourseId>@obj.CourseId</option>
+        }
+    </select>
+        <input type="submit" value="enter" />
+</form>
+
+
 
 

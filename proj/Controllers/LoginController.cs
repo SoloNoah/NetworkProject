@@ -14,6 +14,7 @@ namespace proj.Controllers
         public ActionResult login(){
             return View();
         }
+
         public ActionResult getPermission(){
             UserDal userDal = new UserDal();
             String loggedUsername = Request.Form["Username"].ToString();
@@ -39,6 +40,7 @@ namespace proj.Controllers
             }
             return View("Login");
         }
+
         public ActionResult StudentActions(String loggedUsername){
             //string loggedUser = TempData["loggedUsername"].ToString();
             string loggedUser = Session["loggedUsername"].ToString() ;
@@ -99,6 +101,7 @@ namespace proj.Controllers
             else
                 return View("Login");
         }
+
         public ActionResult LecturerActions(String loggedUsername){
             string loggedUser = Session["loggedUsername"].ToString();
             if (Request.Form["courses"] != null){
@@ -122,6 +125,7 @@ namespace proj.Controllers
                 cvm.courses = lectCourses;
                 return View("ShowCourses", cvm);
             }
+
             if (Request.Form["studentList"] != null){
                 LectDal lectDal = new LectDal();
                 LecturerGotStudsDal studentsDal = new LecturerGotStudsDal();
@@ -131,7 +135,7 @@ namespace proj.Controllers
                 StudentCoursesDal studentCourseDal = new StudentCoursesDal();
                 CoursesDal coursesDal = new CoursesDal();
                 List<string> studUsername = new List<string>();
-
+                List<Courses> lectCourses = new List<Courses>();
                 List<string> c_id = (from y in lectDal.lectsCourses
                                      where y.LectName.Equals(loggedUser)
                                      select y.CourseId).ToList<string>();
@@ -139,27 +143,76 @@ namespace proj.Controllers
                 while (i < c_id.Count())
                 {
                     t = c_id[i];
-                    studUsername = (from y in studentCourseDal.CoursesAndUsers
+                    lectCourses.Add((from y in coursesDal.courses
                                      where y.CourseId.Equals(t)
-                                     select y.Username).ToList<string>();
+                                     select y).SingleOrDefault());
                     i++;
                 }
-
+                CoursesViewModel cvm = new CoursesViewModel();
                 
-                i = 0;
-                while(i < studUsername.Count())
-                {
-                    t = studUsername[i];
-                    singleStud.Add((from y in studentsDal.lectsStudents
-                                  where y.Username.Contains(t)
-                                  select y).FirstOrDefault());
-                    i++;
-                }
-                StudentViewModel svm = new StudentViewModel();
-                svm.studentList = singleStud;
-                return View("ShowStudsForLects", svm);
+                cvm.courses = lectCourses;
+                return View("ShowStudsForLect", cvm);
             }
             return View();
+        }
+
+        public ActionResult enter(String loggedUsername, string courseId)
+        {
+            string loggedUser = Session["loggedUsername"].ToString();
+            String cousreid = courseId;
+            LectDal lectDal = new LectDal();
+            LecturerGotStudsDal studentsDal = new LecturerGotStudsDal();
+            List<Student> singleStud = new List<Student>();
+            string t;
+            List<StudentCourses> studentsInCourse = new List<StudentCourses>();
+            StudentCoursesDal studentCourseDal = new StudentCoursesDal();
+            CoursesDal coursesDal = new CoursesDal();
+            List<string> studUsername = new List<string>();
+            List<Courses> lectCourses = new List<Courses>();
+            List<string> c_id = (from y in lectDal.lectsCourses
+                                 where y.LectName.Equals(loggedUser)
+                                 select y.CourseId).ToList<string>();
+            int i = 0;
+            while (i < c_id.Count())
+            {
+                t = c_id[i];
+                studUsername = (from y in studentCourseDal.CoursesAndUsers
+                                where y.CourseId.Equals(t)
+                                select y.Username).ToList<string>();
+                i++;
+            }
+
+            i = 0;
+            while (i < studUsername.Count())
+            {
+                t = studUsername[i];
+                singleStud.Add((from y in studentsDal.lectsStudents
+                                where y.Username.Contains(t)
+                                select y).FirstOrDefault());
+                i++;
+            }
+            StudentViewModel svm = new StudentViewModel();
+            svm.studentList = singleStud;
+            return View("enter",svm);
+        }
+
+        public ActionResult FaMemberActions(){
+            if (Request.Form["ManageCoursesAndStudents"] != null){
+                CoursesDal coursesDal = new CoursesDal();
+                StudentDal studentsDal = new StudentDal();
+                List<Student> students = (from x
+                                          in studentsDal.allStudents
+                                          select x).ToList<Student>();
+                List<Courses> courses = (from x
+                                        in coursesDal.courses
+                                        select x).ToList<Courses>();
+                CoursesViewModel cvm = new CoursesViewModel();
+                StudentViewModel svm = new StudentViewModel();
+                svm.studentList = students;
+                cvm.courses = courses;
+                //return View(svm,cvm);
+            }
+                return View("login");
         }
     }
 }
