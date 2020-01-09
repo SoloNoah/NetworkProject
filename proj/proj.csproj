@@ -160,6 +160,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="dal\CoursesDal.cs" />
+    <Compile Include="dal\faMemeberDal.cs" />
     <Compile Include="dal\LectDal.cs" />
     <Compile Include="dal\StudentCoursesDal.cs" />
     <Compile Include="dal\ExamsDal.cs" />
@@ -170,6 +171,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Courses.cs" />
+    <Compile Include="Models\faMember.cs" />
     <Compile Include="Models\Lecturer.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentCourses.cs" />
@@ -178,6 +180,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="viewModel\CoursesViewModel.cs" />
     <Compile Include="viewModel\CoursesUserViewModel.cs" />
+    <Compile Include="viewModel\faMemberViewModel.cs" />
     <Compile Include="viewModel\StudentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +235,7 @@
     <Content Include="Views\Login\enter.cshtml" />
     <Content Include="Views\Login\manageStudents.cshtml" />
     <Content Include="Views\Login\FaMemberActions.cshtml" />
+    <Content Include="Views\Login\failes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

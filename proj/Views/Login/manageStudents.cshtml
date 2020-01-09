@@ -9,34 +9,51 @@
         <th>Id </th>
         <th>First Name </th>
         <th>Last Name</th>
-        
+
 
     </tr>
-    @foreach (Student obj in Model.studentList)
+    @foreach (Student obj in Model.faStudents)
     {
         <tr bgcolor="#b2ad7f">
             <td>@obj.Id</td>
             <td>@obj.FirstName</td>
             <td>@obj.LastName</td>
-            
-
+        </tr>
+    }
+</table>
+<table class="table table-bordered table-responsive table-hover">
+    <tr bgcolor="#a2b9bc">
+        <th>Course Id</th>
+        <th>Course Name </th>
+        <th>Day</th>
+        <th>Hour</th>
+        <th>Room</th>
+    </tr>
+    @foreach (Courses obj in Model.faCourses)
+    {
+        <tr bgcolor="#b2ad7f">
+            <td>@obj.CourseId</td>
+            <td>@obj.CourseName</td>
+            <td>@obj.Day</td>
+            <td>@obj.Hour</td>
+            <td>@obj.Room</td>
         </tr>
     }
 </table>
 
-<form method="post" action="update" onsubmit="SetData()">
+<form method="post" action="assign" onsubmit="SetData()">
     <select name="studentId" id="studentId">
-        @foreach (Student obj in Model.studentList)
+        @foreach (Student obj in Model.faStudents)
         {
             <option value=@obj.Id>@obj.Id</option>
         }
     </select>
-    <select name="courseId" id="courseId">
-        @foreach (Courses obj in Model.courses)
+    <select name="courseName" id="courseName">
+        @foreach (Courses obj in Model.faCourses)
         {
-            <option value=@obj.CourseId>@obj.CourseId</option>
+            <option value=@obj.CourseName>@obj.CourseName</option>
         }
     </select>
-    <input type="submit" value="update" />
+    <input type="submit" value="assign" />
 </form>
 

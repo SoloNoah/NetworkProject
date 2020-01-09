@@ -4,17 +4,17 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace proj.Models
 {
-    [Table("tblAllStudents")]
-    public class Student
+    [Table("tblFaMembers")]
+    public class faMember
     {
         [Required]
-        [Key,Column(Order = 0)]
+        [Key, Column(Order = 0)]
         [StringLength(20, MinimumLength = 2, ErrorMessage = "Username must be between 2 and 20")]
         public string Username { get; set; }
-        [Required]
-        [Key,Column(Order = 1)]
+        [Column(Order = 1)]
         public int Id { get; set; }
         [Required]
         [Column(Order = 2)]
@@ -24,6 +24,5 @@ namespace proj.Models
         [Column(Order = 3)]
         [StringLength(15, MinimumLength = 2, ErrorMessage = "Password must be between 2 and 15")]
         public string LastName { get; set; }
-
     }
 }

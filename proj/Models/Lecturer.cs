@@ -11,15 +11,21 @@ namespace proj.Models
     {
         [Required]
         [Key, Column(Order = 0)]
-        public string LectId { get; set; }
+        public int LectId { get; set; }
         [Required]
         [Key, Column(Order = 1)]
-        public string LectName { get; set; }
+        public string Username { get; set; }
         [Required]
         [Column(Order = 2)]
-        public string CourseId { get; set; }
+        public string LectName { get; set; }
         [Required]
         [Column(Order = 3)]
+        public string LectLastName { get; set; }
+        [Required]
+        [Column(Order = 4)]
+        public string CourseId { get; set; }
+        [Required]
+        [Column(Order = 5)]
         public string CourseName { get; set; }
        
     }

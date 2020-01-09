@@ -14,7 +14,7 @@ namespace proj.Models
         [Key, Column(Order = 0)]
         public string CourseId { get; set; }
         [Required]
-        [Key, Column(Order = 1)]
+        [Column(Order = 1)]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Course name must be between 2 and 50")]
         public string CourseName { get; set; }
         [Required]

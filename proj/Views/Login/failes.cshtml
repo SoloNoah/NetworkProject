@@ -1,0 +1,37 @@
+﻿@using proj.Models
+@{
+                /**/
+
+                ViewBag.Title = "manageStudents";
+}
+
+
+@if ((string)Session["result"] == "student assinged")
+{
+    <script type="text/javascript">
+        alert("the student is succsessfuly assinged to this course!");
+    </script>
+    Session["result"] = "";
+}
+@if ((string)Session["result"] == "student cannot be assinged")
+{
+    <script type="text/javascript">
+        alert("the student cannot be assinged to this course!");
+    </script>
+    Session["result"] = "";
+}
+@if ((string)Session["result"] == "success")
+{
+    <script type="text/javascript">
+        alert("data saved-course added to student");
+    </script>
+    Session["result"] = "";
+}
+@if ((string)Session["result"] == "Operation failed")
+{
+    <script type="text/javascript">
+        alert("failed-course was not added to student");
+    </script>
+    Session["result"] = "";
+}
+

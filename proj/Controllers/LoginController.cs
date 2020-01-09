@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -49,13 +52,9 @@ namespace proj.Controllers
                 CoursesDal coursesDal = new CoursesDal();
                 string t;
                 List<Courses> userCourses = new List<Courses>();
-
-                //extracting username and then all courses that the user have from db.
-               
                 List<string> c_id = (from y in courseUser.CoursesAndUsers
                                      where y.Username.Equals(loggedUser)
                                      select y.CourseId).ToList<string>();
-
                 int i = 0;
                 while (i < c_id.Count()){
                     t = c_id[i];
@@ -64,8 +63,6 @@ namespace proj.Controllers
                                      select y).SingleOrDefault());
                     i++;
                 }
-
-
                 CoursesViewModel cvm = new CoursesViewModel();
                 cvm.courses = userCourses;
                 return View("ShowCourses", cvm);
@@ -75,9 +72,6 @@ namespace proj.Controllers
                 ExamsDal examsDal = new ExamsDal();
                 string t;
                 List<Exams> userExams = new List<Exams>();
-
-                //extracting username and then all courses that the user have from db.
-
                 List<string> c_id = (from y in courseUser.CoursesAndUsers
                                      where y.Username.Equals(loggedUser)
                                      select y.CourseId).ToList<string>();
@@ -92,8 +86,6 @@ namespace proj.Controllers
                                    select y).FirstOrDefault());
                     i++;
                 }
-
-
                 CoursesViewModel cvm = new CoursesViewModel();
                 cvm.exams = userExams;
                 return View("ShowExams", cvm);
@@ -206,13 +198,67 @@ namespace proj.Controllers
                 List<Courses> courses = (from x
                                         in coursesDal.courses
                                         select x).ToList<Courses>();
-                CoursesViewModel cvm = new CoursesViewModel();
-                StudentViewModel svm = new StudentViewModel();
-                svm.studentList = students;
-                cvm.courses = courses;
-                //return View(svm,cvm);
+                faMemberViewModel fvm = new faMemberViewModel();
+                fvm.faStudents = students;
+                fvm.faCourses = courses;
+                return View("manageStudents",fvm);
             }
                 return View("login");
+        }
+
+        public ActionResult assign(int studentId, string courseName)
+        {
+            int sid = studentId;
+            string cname = courseName;
+            CoursesDal coursedal = new CoursesDal();
+            StudentDal stud = new StudentDal();
+            Courses cid = (from x
+                           in coursedal.courses
+                           where x.CourseName.Equals(cname)
+                           select x).FirstOrDefault<Courses>();
+            Student sname= (from x
+                           in stud.allStudents
+                            where x.Id.Equals(sid)
+                            select x).FirstOrDefault<Student>();
+            bool result = FindRow(sname.Username, cid.CourseId);
+            //StudentCoursesDal studentcoursedal = new StudentCoursesDal();
+            //StudentCourses sd = studentcoursedal.CoursesAndUsers.Find(sname.Username, cid.CourseId);
+
+            if (result){
+                Session["result"] = "student assinged";
+            }
+            else{
+                Session["result"] = "student cannot be assinged";
+            }
+
+            //SqlConnection conn = new SqlConnection("Data Source=DESKTOP-VI9ABNU\\EMILS;Initial Catalog=proj;Integrated Security=True");
+            //conn.Open();
+            //var query = "INSERT INTO tblStudentCourses (CourseId,Username,ExamA,ExamB) VALUES (@cid, @sid,@gradeA, @gradeB)";
+            //SqlCommand command = new SqlCommand(query,conn);
+            //command.Parameters.Add("@cid", SqlDbType.NVarChar, 20).Value = cid;
+            //command.Parameters.Add("@sid", SqlDbType.NVarChar, 20).Value = sid;
+            //command.Parameters.Add("@gradeA", SqlDbType.Int).Value = "NULL";
+            //command.Parameters.Add("@gradeB", SqlDbType.Int).Value = "NULL";
+            ////int result = command.ExecuteNonQuery();
+            //if( result==0)
+            //{
+            //    Session["saveChanged"] = "Operation failed";
+            //}
+            //else
+            //{
+            //    Session["saveChanged"] = "success";
+            //}
+            //conn.Close();
+            
+            return View("failes");
+        }
+
+        public bool FindRow(string sname, string cid)
+        {
+            StudentCoursesDal scd = new StudentCoursesDal();
+            if (scd.CoursesAndUsers.Any(o => o.CourseId.Equals(cid) && o.Username.Equals(sname)))
+                return false;
+            return true;
         }
     }
 }
