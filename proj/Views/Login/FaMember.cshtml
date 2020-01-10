@@ -13,10 +13,19 @@
     <input id="ManageExams" type="submit" name="ManageExams" value="Manage Exams" />
     <br />
     <input id="UpdateGrades" type="submit" name="UpdateGrades" value="Update Grades" />
+    <br />
+    <input id="ManageCoursesSchedule" type="submit" name="ManageCoursesSchedule" value="Manage Courses Schedule" />
 
 </form>
 
-
+@*lecturer-course*@
+@if ((string)Session["result"] == "Operation failed")
+{
+    <script type="text/javascript">
+        alert("the lecturer cannot be assinged to this course!");
+    </script>
+    Session["result"] = "";
+}
 @if ((string)Session["rowExists"] == "Lecturer assinged")
 {
     <script type="text/javascript">
@@ -33,13 +42,8 @@
 }
 
 
-@if ((string)Session["rowExists"] == "student already assinged")
-{
-    <script type="text/javascript">
-        alert("the student cannot be assinged to this course!");
-    </script>
-    Session["rowExists"] = "";
-}
+
+@*student-course*@
 @if ((string)Session["rowExists"] == "student already assinged")
 {
     <script type="text/javascript">
@@ -54,10 +58,64 @@
     </script>
     Session["result"] = "";
 }
-@if ((string)Session["result"] == "Operation failed")
+@if ((string)Session["result"] == "Operation failed for student")
 {
     <script type="text/javascript">
         alert("failed-course was not added to student due to hours");
     </script>
     Session["result"] = "";
+}
+
+
+
+
+
+
+
+
+@*schedule-course*@
+@if ((string)Session["courseSaved"] == "course clashes with other courses!")
+{
+    <script type="text/javascript">
+        alert("failed-course was not added - clashing with other course");
+    </script>
+    Session["courseSaved"] = "";
+}
+@if ((string)Session["courseSaved"] == "the course has been added!")
+{
+    <script type="text/javascript">
+        alert("course was added to schedule");
+    </script>
+    Session["courseSaved"] = "";
+}
+@if ((string)Session["coursedeleted"] == "the course has been deleted!")
+{
+    <script type="text/javascript">
+        alert("the course has been deleted!");
+    </script>
+    Session["courseSaved"] = "";
+}
+
+
+@*exam-schedule*@
+@if ((string)Session["examSaved"] == "exam clashes with other exams!")
+{
+    <script type="text/javascript">
+        alert("exam clashes with other exams!");
+    </script>
+    Session["examSaved"] = "";
+}
+@if ((string)Session["examSaved"] == "the exam has been added!")
+{
+    <script type="text/javascript">
+        alert("the exam has been added!");
+    </script>
+    Session["examSaved"] = "";
+}
+@if ((string)Session["examdeleted"] == "the exam has been deleted!")
+{
+    <script type="text/javascript">
+        alert("the exam has been deleted!");
+    </script>
+    Session["examdeleted"] = "";
 }

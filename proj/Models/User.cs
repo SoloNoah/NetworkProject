@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 namespace proj.Models
 {
+    [Table("tblUsers")]
     public class User
     {
         [Required]
-        [Key]
+        [Key, Column(Order = 0)]
         [StringLength(20, MinimumLength = 3, ErrorMessage = "Username must be between 3 and 20")]
         public string Username { get; set; }
         [Required]

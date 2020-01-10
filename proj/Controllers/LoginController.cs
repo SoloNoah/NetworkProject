@@ -231,33 +231,30 @@ namespace proj.Controllers
                 fvm.faCourses = courses;
                 return View("manageStudents", fvm);
             }
-            if(Request.Form["ManageCoursesAndLects"] != null){
+            if(Request.Form["ManageCoursesSchedule"] != null){
                 CoursesDal coursesDal = new CoursesDal();
-                LectDal lectsDal = new LectDal();
-                List<Lecturer> lecturers = new List<Lecturer>();
-                lecturers = (from x
-                              in lectsDal.lectsCourses
-                              select x).ToList<Lecturer>();
-                List < Courses > courses = (from x
-                                           in coursesDal.courses
-                                            select x).ToList<Courses>();
-                List<int> disLecID = distinct(lecturers, lectsDal);
-                faMemberViewModel fvm = new faMemberViewModel();
-                fvm.faLecturersID = disLecID;
-                fvm.faLecturers = lecturers;
-                fvm.faCourses = courses;
-                return View("manageLecturers", fvm);
+                List<Courses> courses = (from x
+                                       in coursesDal.courses
+                                         select x).ToList<Courses>();
+                CoursesViewModel cvm = new CoursesViewModel();
+                cvm.courses = courses;
+                return View("manageCourses", cvm);
             }
             if(Request.Form["ManageExams"] != null){
                 ExamsDal examdal = new ExamsDal();
+                CoursesDal coursesDal = new CoursesDal();
                 List<Exams> exams = (from x
                                      in examdal.exams
                                      select x).ToList<Exams>();
+                List<Courses> courses = (from x
+                                      in coursesDal.courses
+                                         select x).ToList<Courses>();
                 CoursesViewModel cvm = new CoursesViewModel();
                 cvm.exams = exams;
-                return View("ShowExams", cvm);
+                cvm.courses = courses;
+                return View("manageExams", cvm);
             }
-                return View();
+            return View();
         }
 
         public ActionResult assignStudents(int studentId, string courseName) {
@@ -302,14 +299,14 @@ namespace proj.Controllers
                 //if result true = means the day&hour does clash with the existing student`s courses.
                 if (result)
                 {
-                    Session["result"] = "Operation failed";
+                    Session["result"] = "Operation failed for student";
                 }
                 else
                 {
                     StudentCourses studentcourses = new StudentCourses { CourseId = cid.CourseId, Username = sname.Username, ExamA = 0, ExamB = 0 };
                     studentcoursedal.CoursesAndUsers.Add(studentcourses);
                     studentcoursedal.SaveChanges();
-                    Session["rowExists"] = "student assinged";
+                    Session["rowExists"] = "success";
                 }
             }
             else
@@ -352,6 +349,31 @@ namespace proj.Controllers
                     if (a || b || c || d)
                         return true;
                     return false;
+                }
+                i++;
+            }
+            return false;
+        }
+
+        public bool isClashingExams(Exams givenExam, List<Exams> examsToCheck)
+        {
+            int i = 0;
+            while (i < examsToCheck.Count())
+            {
+                if (examsToCheck[i].Day == givenExam.Day)
+                {
+                    if (examsToCheck[i].Moed == givenExam.Moed)
+                    {
+                        bool a = givenExam.SHour <= examsToCheck[i].SHour && givenExam.EHour <= examsToCheck[i].EHour &&
+                            givenExam.EHour > examsToCheck[i].SHour;
+                        bool b = givenExam.SHour > examsToCheck[i].SHour && givenExam.EHour < examsToCheck[i].EHour;
+                        bool c = givenExam.SHour < examsToCheck[i].SHour && givenExam.EHour > examsToCheck[i].EHour;
+                        bool d = givenExam.SHour > examsToCheck[i].SHour && givenExam.EHour > examsToCheck[i].EHour &&
+                            givenExam.SHour < examsToCheck[i].EHour;
+                        if (a || b || c || d)
+                            return true;
+                        return false;
+                    }
                 }
                 i++;
             }
@@ -403,7 +425,6 @@ namespace proj.Controllers
                 {
                     Session["result"] = "Operation failed";
                 }
-                //tofix2802
                 else
                 {
                     Lecturer lecturer = new Lecturer { LectId=Lid, Username = Lname.Username, LectName=Lname.LectName, LectLastName=Lname.LectLastName, CourseId=cid.CourseId , CourseName =cid.CourseName };
@@ -462,6 +483,205 @@ namespace proj.Controllers
             }
             List<int> disLec = distincedLects.Distinct().ToList<int>();
             return disLec;
+        }
+
+        public ActionResult addCourse()
+        {
+            //extracting the info from faMember inputs.
+            string courseId = Request.Form["CourseId"].ToString();
+            string courseName = Request.Form["CourseName"].ToString();
+            string Day = Request.Form["Day"].ToString();
+            string Room = Request.Form["Room"].ToString();
+            string StartHour = Request.Form["SHour"].ToString();
+            TimeSpan SHour = TimeSpan.Parse(StartHour);
+            string EndHour = Request.Form["EHour"].ToString();
+            TimeSpan EHour = TimeSpan.Parse(EndHour);
+            Courses newC = new Courses
+            {
+                CourseId = courseId,
+                CourseName = courseName,
+                Day = Day,
+                SHour = SHour,
+                EHour = EHour,
+                Room = Room
+            };
+            CoursesDal coursesDal = new CoursesDal();
+            List<Courses> courses = (from x
+                                    in coursesDal.courses
+                                        select x).ToList<Courses>();
+            //checking if the info above clashes with exsisting courses.
+            bool clashes = isClashing(newC, courses);
+            //if clashes true = means the day&hour does clash with the existing courses.
+            if (clashes)
+            {
+                Session["courseSaved"] = "course clashes with other courses!";
+            }
+            else
+            {
+                coursesDal.courses.Add(newC);
+                coursesDal.SaveChanges();
+                Session["courseSaved"] = "the course has been added!";
+            }
+        return View("FaMember");
+        }
+
+        public ActionResult deleteCourse(string courseId)
+        {
+            CoursesDal cdal = new CoursesDal();
+            StudentCoursesDal scdal = new StudentCoursesDal();
+            //extracting the relevant course to be deleted.
+            Courses courseTBD = (cdal.courses.Single(c => c.CourseId.Equals(courseId)));
+            StudentCourses studentCourseTBD = (scdal.CoursesAndUsers.Single(c => c.CourseId.Equals(courseId)));
+            cdal.courses.Remove(courseTBD);
+            scdal.CoursesAndUsers.Remove(studentCourseTBD);
+            cdal.SaveChanges();
+            scdal.SaveChanges();
+            Session["coursedeleted"] = "the course has been deleted!";
+            return View("FaMember");
+
+        }
+
+        public ActionResult editCourses(string courseId)
+        {
+            //extracting the info from faMember inputs.
+            string courseid = courseId;
+            string Day = Request.Form["Day"].ToString();
+            string Room = Request.Form["Room"].ToString();
+            string StartHour = Request.Form["SHour"].ToString();
+            TimeSpan SHour = TimeSpan.Parse(StartHour);
+            string EndHour = Request.Form["EHour"].ToString();
+            TimeSpan EHour = TimeSpan.Parse(EndHour);
+            CoursesDal cdal = new CoursesDal();
+            //saving the old course
+            Courses c = (cdal.courses.Single(x => x.CourseId.Equals(courseId)));
+            string cname = c.CourseName;
+            //crating new course with new dits.
+            Courses newC = new Courses
+            {
+                CourseId = courseid,
+                CourseName = cname,
+                Day = Day,
+                SHour = SHour,
+                EHour = EHour,
+                Room = Room
+            };
+            List<Courses> courses = (from x
+                                    in cdal.courses
+                                    select x).ToList<Courses>();
+            //checking if the info above clashes with exsisting courses.
+            bool clashes = isClashing(newC, courses);
+            if (clashes)
+            {
+                Session["courseSaved"] = "course clashes with other courses!";
+            }
+            else
+            {
+                cdal.courses.Remove(c);
+                cdal.courses.Add(newC);
+                cdal.SaveChanges();
+                Session["courseSaved"] = "the course has been added!";
+            }
+            return View("FaMember");
+
+        }
+
+        public ActionResult addExam()
+        {
+            //extracting the info from faMember inputs.
+            string moed = Request.Form["Moed"].ToString();
+            string courseId = Request.Form["CourseId"].ToString();
+            string courseName = Request.Form["CourseName"].ToString();
+            string Day = Request.Form["Day"].ToString();
+            string Room = Request.Form["Room"].ToString();
+            string StartHour = Request.Form["SHour"].ToString();
+            TimeSpan SHour = TimeSpan.Parse(StartHour);
+            string EndHour = Request.Form["EHour"].ToString();
+            TimeSpan EHour = TimeSpan.Parse(EndHour);
+            Exams newE = new Exams()
+            {
+                Moed = moed,
+                CourseId = courseId,
+                CourseName = courseName,
+                Day = Day,
+                SHour = SHour,
+                EHour = EHour,
+                Room = Room
+            };
+            ExamsDal examsDal = new ExamsDal();
+            List<Exams> exams = (from x
+                                 in examsDal.exams
+                                 select x).ToList<Exams>();
+            //checking if the info above clashes with exsisting courses.
+            bool clashes = isClashingExams(newE, exams);
+            //if clashes true = means the day&hour does clash with the existing courses.
+            if (clashes)
+            {
+                Session["examSaved"] = "exam clashes with other exams!";
+            }
+            else
+            {
+                examsDal.exams.Add(newE);
+                examsDal.SaveChanges();
+                Session["courseSaved"] = "the exam has been added!";
+            }
+            return View("FaMember");
+        }
+
+        public ActionResult deleteExam(string courseId,string moed)
+        {
+            ExamsDal edal = new ExamsDal();
+            //extracting the relevant course to be deleted.
+            Exams examTBD = (edal.exams.Single(c => c.CourseId.Equals(courseId) && c.Moed.Equals(moed)));
+            edal.exams.Remove(examTBD);
+            edal.SaveChanges();
+            Session["examdeleted"] = "the exam has been deleted!";
+            return View("FaMember");
+        }
+
+        public ActionResult editExam(string courseId, string moed)
+        {
+            //extracting the info from faMember inputs.
+            string courseid = courseId;
+            string eMoed = moed;
+            string Day = Request.Form["Day"].ToString();
+            string Room = Request.Form["Room"].ToString();
+            string StartHour = Request.Form["SHour"].ToString();
+            TimeSpan SHour = TimeSpan.Parse(StartHour);
+            string EndHour = Request.Form["EHour"].ToString();
+            TimeSpan EHour = TimeSpan.Parse(EndHour);
+            ExamsDal edal = new ExamsDal();
+            //saving the old course
+            Exams e = (edal.exams.Single(c => c.CourseId.Equals(courseId) && c.Moed.Equals(moed)));
+            string cname = e.CourseName;
+            //crating new course with new dits.
+            Exams newE = new Exams
+            {
+                Moed = eMoed,
+                CourseId = courseid,
+                CourseName = cname,
+                Day = Day,
+                SHour = SHour,
+                EHour = EHour,
+                Room = Room
+            };
+            List<Exams> exams = (from x
+                                   in edal.exams
+                                   select x).ToList<Exams>();
+            //checking if the info above clashes with exsisting courses.
+            bool clashes = isClashingExams(newE, exams);
+            if (clashes)
+            {
+                Session["examSaved"] = "exam clashes with other courses!";
+            }
+            else
+            {
+                edal.exams.Remove(e);
+                edal.exams.Add(newE);
+                edal.SaveChanges();
+                Session["examSaved"] = "the exam has been added!";
+            }
+            return View("FaMember");
+
         }
     }
 }

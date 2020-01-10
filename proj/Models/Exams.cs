@@ -11,27 +11,25 @@ namespace proj.Models
     public class Exams
     {
         [Required]
-        [Key, Column(Order = 0)]
+        [Key, Column(Order = 2)]
+        [RegularExpression("^[a|b]{1}$", ErrorMessage = "Moed must be a or b")]
         public string Moed { get; set; }
-
+        [RegularExpression("^[0-9]{1}$", ErrorMessage = "Course Id must be at least 1 digits")]
         [Required]
-        [Key, Column(Order = 1)]
+        [Key, Column(Order = 0)]
         public string CourseId { get; set; }
-
         [Required]
-        [Column(Order = 2)]
         [StringLength(15, MinimumLength = 2, ErrorMessage = "Course name must be between 2 and 15")]
         public string CourseName { get; set; }
-
-        [Column(Order = 3)]
+        [Required]
+        [StringLength(50, MinimumLength = 6, ErrorMessage = "Day must be between 6 and 50")]
         public string Day { get; set; }
-
-        [Column(Order = 4)]
         [Required]
-        public string Hour { get; set; }
-
+        public TimeSpan SHour { get; set; }
         [Required]
-        [Column(Order = 5)]
+        public TimeSpan EHour { get; set; }
+        [Required]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "room must be between 3 and 50")]
         public string Room { get; set; }
     }
 }

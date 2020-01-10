@@ -1,0 +1,79 @@
+﻿@model proj.viewModel.CoursesViewModel
+@using proj.Models
+@{
+    ViewBag.Title = "manageCourses";
+}
+
+<div><b>Courses</b><br /></div>
+<table class="table table-bordered table-responsive table-hover">
+    <tr bgcolor="#a2b9bc">
+        <th>Course Id </th>
+        <th>Course Name </th>
+        <th>Day</th>
+        <th>SHour </th>
+        <th>Room </th>
+        <th>EHour </th>
+
+
+    </tr>
+    @foreach (Courses obj in Model.courses)
+    {
+        <tr bgcolor="#b2ad7f">
+            <td>@obj.CourseId</td>
+            <td>@obj.CourseName</td>
+            <td>@obj.Day</td>
+            <td>@obj.SHour</td>
+            <td>@obj.Room</td>
+            <td>@obj.EHour</td>
+
+
+        </tr>
+    }
+</table>
+<h5>Add Course To System</h5>
+<form method="post" action="addCourse" onsubmit="SetData()">
+    <label>Course Id: </label> <input id="CourseId" name="CourseId" type="text" />@Html.ValidationMessageFor(x => x.course.CourseId)
+    <br />
+    <label>Course Name: </label> <input id="CourseName" name="CourseName" type="text" />@Html.ValidationMessageFor(x => x.course.CourseName)
+    <br />
+    <label>Day: </label> <input id="Day" name="Day" type="text" />@Html.ValidationMessageFor(x => x.course.Day)
+    <br />
+    <label>Start Hour: </label> <input id="SHour" name="SHour" type="text" />@Html.ValidationMessageFor(x => x.course.SHour)
+    <br />
+    <label>Room: </label> <input id="Room" name="Room" type="text" />@Html.ValidationMessageFor(x => x.course.Room)
+    <br />
+    <label>End Hour: </label> <input id="EHour" name="EHour" type="text" />@Html.ValidationMessageFor(x => x.course.EHour)
+    <br />
+    <input id="SubmitChange" type="submit" value="Add Course" />
+</form>
+
+<h5>Delete Course from the System</h5>
+<form method="post" action="deleteCourse" onsubmit="SetData()">
+    <select name="courseId" id="courseId">
+        @foreach (Courses obj in Model.courses)
+        {
+            <option value=@obj.CourseId>@obj.CourseId</option>
+        }
+    </select>
+    <input type="submit" value="delete" />
+</form>
+
+<h5>edit exsisting courses</h5>
+<form method="post" action="editCourses" onsubmit="SetData()">
+    <select name="courseId" id="courseId">
+        @foreach (Courses obj in Model.courses)
+        {
+            <option value=@obj.CourseId>@obj.CourseId</option>
+        }
+    </select>
+    <br />
+    <label>Day: </label> <input id="Day" name="Day" type="text" />@Html.ValidationMessageFor(x => x.course.Day)
+    <br />
+    <label>Start Hour: </label> <input id="SHour" name="SHour" type="text" />@Html.ValidationMessageFor(x => x.course.SHour)
+    <br />
+    <label>Room: </label> <input id="Room" name="Room" type="text" />@Html.ValidationMessageFor(x => x.course.Room)
+    <br />
+    <label>End Hour: </label> <input id="EHour" name="EHour" type="text" />@Html.ValidationMessageFor(x => x.course.EHour)
+    <br />
+    <input id="SubmitChange" type="submit" value="save changes" />
+</form>

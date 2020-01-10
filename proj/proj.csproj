@@ -240,6 +240,7 @@
     <Content Include="Views\Login\manageLecturers.cshtml" />
     <Content Include="Views\Login\manageExams.cshtml" />
     <Content Include="Views\Login\updateGradesLect.cshtml" />
+    <Content Include="Views\Login\manageCourses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
