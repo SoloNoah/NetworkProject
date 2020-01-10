@@ -1,17 +1,17 @@
 ﻿@using proj.Models
 @{
-    ViewBag.Title = "ShowCourses";
+    ViewBag.Title = "manageExams";
 }
 
-<div><b>Schedule</b><br /></div>
+<div><b>Exams</b><br /></div>
 <table class="table table-bordered table-responsive table-hover">
     <tr bgcolor="#a2b9bc">
         <th>Course Id </th>
         <th>Course Name </th>
         <th>Day</th>
-        <th>Start Hour </th>
+        <th>SHour </th>
         <th>Room </th>
-        <th>End Hour </th>
+        <th>EHour </th>
 
     </tr>
     @foreach (Courses obj in Model.courses)
@@ -23,7 +23,16 @@
         <td>@obj.SHour</td>
         <td>@obj.Room</td>
         <td>@obj.EHour</td>
-
     </tr>
     }
 </table>
+
+<form method="post" action="FaMupdateGrade" onsubmit="SetData()">
+    <select name="courseId" id="courseId">
+        @foreach (Courses obj in Model.courses)
+        {
+            <option value=@obj.CourseId>@obj.CourseId</option>
+        }
+    </select>
+    <input type="submit" value="enter" />
+</form>

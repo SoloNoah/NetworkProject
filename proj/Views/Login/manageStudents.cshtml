@@ -26,8 +26,9 @@
         <th>Course Id</th>
         <th>Course Name </th>
         <th>Day</th>
-        <th>Hour</th>
+        <th>Start Hour</th>
         <th>Room</th>
+        <th>End Hour</th>
     </tr>
     @foreach (Courses obj in Model.faCourses)
     {
@@ -35,13 +36,14 @@
             <td>@obj.CourseId</td>
             <td>@obj.CourseName</td>
             <td>@obj.Day</td>
-            <td>@obj.Hour</td>
+            <td>@obj.SHour</td>
             <td>@obj.Room</td>
+            <td>@obj.EHour</td>
         </tr>
     }
 </table>
 
-<form method="post" action="assign" onsubmit="SetData()">
+<form method="post" action="assignStudents" onsubmit="SetData()">
     <select name="studentId" id="studentId">
         @foreach (Student obj in Model.faStudents)
         {
@@ -56,4 +58,49 @@
     </select>
     <input type="submit" value="assign" />
 </form>
+
+@if ((string)Session["rowExists"] == "Lecturer assinged")
+{
+    <script type="text/javascript">
+        alert("the lecturer is succsessfuly assinged to this course!");
+    </script>
+    Session["rowExists"] = "";
+}
+@if ((string)Session["rowExists"] == "Lecturer already assinged")
+{
+    <script type="text/javascript">
+        alert("the lecturer cannot be assinged to this course!");
+    </script>
+    Session["rowExists"] = "";
+}
+
+
+@if ((string)Session["rowExists"] == "student already assinged")
+{
+    <script type="text/javascript">
+        alert("the student cannot be assinged to this course!");
+    </script>
+    Session["rowExists"] = "";
+}
+@if ((string)Session["rowExists"] == "student already assinged")
+{
+    <script type="text/javascript">
+        alert("the student cannot be assinged to this course!");
+    </script>
+    Session["rowExists"] = "";
+}
+@if ((string)Session["result"] == "success")
+{
+    <script type="text/javascript">
+        alert("data saved-course added to student");
+    </script>
+    Session["result"] = "";
+}
+@if ((string)Session["result"] == "Operation failed")
+{
+    <script type="text/javascript">
+        alert("failed-course was not added to student due to hours");
+    </script>
+    Session["result"] = "";
+}
 

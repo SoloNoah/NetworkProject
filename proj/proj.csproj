@@ -181,7 +181,9 @@
     <Compile Include="viewModel\CoursesViewModel.cs" />
     <Compile Include="viewModel\CoursesUserViewModel.cs" />
     <Compile Include="viewModel\faMemberViewModel.cs" />
+    <Compile Include="viewModel\LecturerViewModel.cs" />
     <Compile Include="viewModel\StudentViewModel.cs" />
+    <Compile Include="viewModel\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -235,7 +237,9 @@
     <Content Include="Views\Login\enter.cshtml" />
     <Content Include="Views\Login\manageStudents.cshtml" />
     <Content Include="Views\Login\FaMemberActions.cshtml" />
-    <Content Include="Views\Login\failes.cshtml" />
+    <Content Include="Views\Login\manageLecturers.cshtml" />
+    <Content Include="Views\Login\manageExams.cshtml" />
+    <Content Include="Views\Login\updateGradesLect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

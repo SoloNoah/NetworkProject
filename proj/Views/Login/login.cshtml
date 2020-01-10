@@ -1,4 +1,5 @@
-﻿@using proj.Models
+﻿@model proj.viewModel.UserViewModel
+@using proj.Models
 @{
     ViewBag.Title = "Login";
 }
@@ -18,13 +19,14 @@
         margin-bottom: 20px;
         margin-left: 20px;
     }
+
     h2 {
         font-family: Arial, Helvetica, sans-serif
     }
-    label{
-        margin-top: 10px  
+
+    label {
+        margin-top: 10px
     }
-   
 </style>
 
 <h2>Login</h2>
@@ -32,11 +34,26 @@
 <div>
 
     <form action="getPermission" method="post">
-        <label>Username: </label> <input id="Username" name="Username" type="text" />
+        <label>Username: </label> <input id="Username" name="Username" type="text" />@Html.ValidationMessageFor(x => x.user.Username)
         <br />
-        <label>Password: </label> <input id="Password" name="Password" type="password" />
+        <label>Password: </label> <input id="Password" name="Password" type="password" />@Html.ValidationMessageFor(x => x.user.Password)
         <br />
         <input id="SubmitLogin" type="submit" value="Submit" />
     </form>
 
 </div>
+
+@if ((string)Session["loginValid"] == "not validated-password")
+{
+    <script type="text/javascript">
+        alert("login Failed! Password Incorrect!");
+    </script>
+    Session["rowExists"] = "";
+}
+@if ((string)Session["loginValid"] == "not validated-username")
+{
+    <script type="text/javascript">
+        alert("login Failed! Username Incorrect!");
+    </script>
+    Session["rowExists"] = "";
+}

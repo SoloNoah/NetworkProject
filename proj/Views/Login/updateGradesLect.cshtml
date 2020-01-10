@@ -1,0 +1,61 @@
+﻿@using proj.Models
+@{
+    ViewBag.Title = "updateGradesLect";
+}
+
+<h2>updateGradesLect</h2>
+<table class="table table-bordered table-responsive table-hover">
+    <tr bgcolor="#a2b9bc">
+        <th>Username </th>
+        <th>First Name </th>
+        <th>Last Name</th>
+       
+
+    </tr>
+    @foreach (Student obj in Model.students)
+    {
+        <tr bgcolor="#b2ad7f">
+            <td>@obj.Username</td>
+            <td>@obj.Id</td>
+            <td>@obj.FirstName</td>
+            <td>@obj.LastName</td>
+            
+        </tr>
+    }
+</table>
+<table class="table table-bordered table-responsive table-hover">
+    <tr bgcolor="#a2b9bc">
+        <th>Course Id</th>
+        <th>Username </th>
+        <th>Moed A</th>
+        <th>Moed B</th>
+        
+    </tr>
+    @foreach (StudentCourses obj in Model.studentcourses)
+    {
+        <tr bgcolor="#b2ad7f">
+            <td>@obj.CourseId</td>
+            <td>@obj.Username</td>
+            <td>@obj.ExamA</td>
+            <td>@obj.ExamB</td>
+           
+        </tr>
+    }
+</table>
+
+
+@*<form method="post" action="updateGrade" onsubmit="SetData()">
+    <select name="LectId" id="LectId">
+        @foreach (Lecturer obj in Model.faLecturers)
+        {
+            <option value=@obj.LectId>@obj.LectId</option>
+        }
+    </select>
+    <select name="courseName" id="courseName">
+        @foreach (Courses obj in Model.faCourses)
+        {
+            <option value=@obj.CourseName>@obj.CourseName</option>
+        }
+    </select>
+    <input type="submit" value="assign" />
+</form>*@

@@ -10,6 +10,7 @@ namespace proj.dal
     {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            Database.SetInitializer<StudentDal>(null);
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Student>().ToTable("tblAllStudents");
         }

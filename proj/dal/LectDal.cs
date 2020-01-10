@@ -10,6 +10,7 @@ namespace proj.dal
     {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            Database.SetInitializer<LectDal>(null);
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Lecturer>().ToTable("tblLect");
         }

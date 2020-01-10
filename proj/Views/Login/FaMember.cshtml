@@ -1,4 +1,4 @@
-﻿
+﻿@using proj.Models
 @{
     ViewBag.Title = "FaMember";
 }
@@ -8,8 +8,56 @@
 <form action="FaMemberActions" method="post">
     <input id="ManageCoursesAndStudents" type="submit" name="ManageCoursesAndStudents" value="Manage Students and Courses" />
     <br />
-    <input id="ManangeExams" type="submit" name="ManageExams" value="Manange Exams" />
+    <input id="ManageCoursesAndLects" type="submit" name="ManageCoursesAndLects" value="Manage Lecturers and Courses" />
+    <br />
+    <input id="ManageExams" type="submit" name="ManageExams" value="Manage Exams" />
     <br />
     <input id="UpdateGrades" type="submit" name="UpdateGrades" value="Update Grades" />
 
 </form>
+
+
+@if ((string)Session["rowExists"] == "Lecturer assinged")
+{
+    <script type="text/javascript">
+        alert("the lecturer is succsessfuly assinged to this course!");
+    </script>
+    Session["rowExists"] = "";
+}
+@if ((string)Session["rowExists"] == "Lecturer already assinged")
+{
+    <script type="text/javascript">
+        alert("the lecturer cannot be assinged to this course!");
+    </script>
+    Session["rowExists"] = "";
+}
+
+
+@if ((string)Session["rowExists"] == "student already assinged")
+{
+    <script type="text/javascript">
+        alert("the student cannot be assinged to this course!");
+    </script>
+    Session["rowExists"] = "";
+}
+@if ((string)Session["rowExists"] == "student already assinged")
+{
+    <script type="text/javascript">
+        alert("the student cannot be assinged to this course!");
+    </script>
+    Session["rowExists"] = "";
+}
+@if ((string)Session["result"] == "success")
+{
+    <script type="text/javascript">
+        alert("data saved-course added to student");
+    </script>
+    Session["result"] = "";
+}
+@if ((string)Session["result"] == "Operation failed")
+{
+    <script type="text/javascript">
+        alert("failed-course was not added to student due to hours");
+    </script>
+    Session["result"] = "";
+}

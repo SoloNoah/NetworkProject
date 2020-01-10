@@ -8,6 +8,30 @@
 
 <div><b>choose student from course</b><br /></div>
 
+<table class="table table-bordered table-responsive table-hover">
+    <tr bgcolor="#a2b9bc">
+        <th>Course Id </th>
+        <th>Course Name </th>
+        <th>Day</th>
+        <th>Start Hour </th>
+        <th>Room </th>
+        <th>End Hour </th>
+
+    </tr>
+    @foreach (Courses obj in Model.courses)
+    {
+        <tr bgcolor="#b2ad7f">
+            <td>@obj.CourseId</td>
+            <td>@obj.CourseName</td>
+            <td>@obj.Day</td>
+            <td>@obj.SHour</td>
+            <td>@obj.Room</td>
+            <td>@obj.EHour</td>
+
+        </tr>
+    }
+</table>
+
 
 <form method ="post" action="enter" onsubmit="SetData()">
     <select name="courseId" id="courseId">

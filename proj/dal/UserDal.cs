@@ -11,6 +11,7 @@ namespace proj.dal
     {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            Database.SetInitializer<UserDal>(null);
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().ToTable("tblUsers");
         }
