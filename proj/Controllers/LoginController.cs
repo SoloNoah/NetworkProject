@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using proj.dal;
 using proj.Models;
 using proj.viewModel;
-//this is Emilias try to commit and push to git
+//this is Emilias try to commit and push to git2
 namespace proj.Controllers
 {
     public class LoginController : Controller
