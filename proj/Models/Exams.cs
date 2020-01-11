@@ -22,14 +22,16 @@ namespace proj.Models
         [StringLength(15, MinimumLength = 2, ErrorMessage = "Course name must be between 2 and 15")]
         public string CourseName { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = 6, ErrorMessage = "Day must be between 6 and 50")]
+        [StringLength(50, MinimumLength = 6, ErrorMessage = "Day must be sunday-friday")]
         public string Day { get; set; }
         [Required]
+        [RegularExpression("^([01][0-9]|2[0-3]):[0-5][0-9]$", ErrorMessage = "Start Hour must be at hh:mm")]
         public TimeSpan SHour { get; set; }
         [Required]
+        [RegularExpression("^([01][0-9]|2[0-3]):[0-5][0-9]$", ErrorMessage = "End Hour must be at hh:mm")]
         public TimeSpan EHour { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "room must be between 3 and 50")]
+        [RegularExpression("^[a-zA-z][0-9]$", ErrorMessage = "room must be a-z letter and 100-1000 number")]
         public string Room { get; set; }
     }
 }
