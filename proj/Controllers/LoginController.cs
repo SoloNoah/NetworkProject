@@ -67,7 +67,7 @@ namespace proj.Controllers
             }
             if (Request.Form["exams"] != null) {
                 StudentCoursesDal courseUser = new StudentCoursesDal();
-               ` ExamsDal examsDal = new ExamsDal();
+                ExamsDal examsDal = new ExamsDal();
                 string t;
                 List<Exams> userExams = new List<Exams>();
 
