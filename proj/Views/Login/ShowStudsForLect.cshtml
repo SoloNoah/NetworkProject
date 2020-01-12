@@ -1,29 +1,28 @@
 ﻿@using proj.Models
-
 @{
-    ViewBag.Title = "studentsListAssosCourses";
+    ViewBag.Title = "ShowStudsForLect";
 }
-
 <h2>studentsListAssosCourses</h2>
-
-<div><b>Your students in courses</b><br /></div>
+<div><b>choose student from course</b><br /></div>
 <table class="table table-bordered table-responsive table-hover">
     <tr bgcolor="#a2b9bc">
-        <th>Username </th>
-        <th>Id </th>
-        <th>First Name</th>
-        <th>Last Name </th>
-
+        <th>Course Id </th>
+        <th>Course Name </th>
+        <th>Day</th>
+        <th>Start Hour </th>
+        <th>Room </th>
+        <th>End Hour </th>
     </tr>
-    @foreach (Student obj in Model.studentList)
+    @foreach (Courses obj in Model.courses)
     {
         <tr bgcolor="#b2ad7f">
-            <td>@obj.Username</td>
-            <td>@obj.Id</td>
-            <td>@obj.FirstName</td>
-            <td>@obj.LastName</td>
+            <td>@obj.CourseId</td>
+            <td>@obj.CourseName</td>
+            <td>@obj.Day</td>
+            <td>@obj.SHour</td>
+            <td>@obj.Room</td>
+            <td>@obj.EHour</td>
         </tr>
     }
 </table>
-
 

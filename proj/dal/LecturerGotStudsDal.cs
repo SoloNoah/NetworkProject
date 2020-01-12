@@ -12,7 +12,7 @@ namespace proj.dal
         {
             Database.SetInitializer<LecturerGotStudsDal>(null);
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Student>().ToTable("tblAllStudents");
+            modelBuilder.Entity<Student>().ToTable("tblStudents");
         }
         public DbSet<Student> lectsStudents { get; set; }
     }

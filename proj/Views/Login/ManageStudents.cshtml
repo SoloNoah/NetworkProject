@@ -1,0 +1,63 @@
+﻿@using proj.Models
+@{
+    ViewBag.Title = "ManageStudents";
+}
+
+<h2>manageStudents</h2>
+<table class="table table-bordered table-responsive table-hover">
+    <tr bgcolor="#a2b9bc">
+        <th>Id </th>
+        <th>First Name </th>
+        <th>Last Name</th>
+
+
+    </tr>
+    @foreach (Student obj in Model.faStudents)
+    {
+        <tr bgcolor="#b2ad7f">
+            <td>@obj.Id</td>
+            <td>@obj.FirstName</td>
+            <td>@obj.LastName</td>
+        </tr>
+    }
+</table>
+<table class="table table-bordered table-responsive table-hover">
+    <tr bgcolor="#a2b9bc">
+        <th>Course Id</th>
+        <th>Course Name </th>
+        <th>Day</th>
+        <th>Start Hour</th>
+        <th>Room</th>
+        <th>End Hour</th>
+    </tr>
+    @foreach (Courses obj in Model.faCourses)
+    {
+    <tr bgcolor="#b2ad7f">
+        <td>@obj.CourseId</td>
+        <td>@obj.CourseName</td>
+        <td>@obj.Day</td>
+        <td>@obj.SHour</td>
+        <td>@obj.Room</td>
+        <td>@obj.EHour</td>
+    </tr>
+    }
+</table>
+
+<form method="post" action="AssignStudents" onsubmit="SetData()">
+    <h3>Select student id</h3>
+    <select name="studentId" id="studentId">
+        @foreach (Student obj in Model.faStudents)
+        {
+            <option value=@obj.Id>@obj.Id</option>
+        }
+    </select>
+    <h3>Select course name</h3>
+    <select name="courseName" id="courseName">
+        @foreach (Courses obj in Model.faCourses)
+        {
+            <option value=@obj.CourseName>@obj.CourseName</option>
+        }
+    </select>
+    <input type="submit" value="assign" />
+</form>
+

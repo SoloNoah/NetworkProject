@@ -12,5 +12,6 @@ namespace proj.viewModel
         public Exams exam { get; set; }
         public List<Courses> courses { get; set; }
         public List<Exams> exams { get; set; }
+        public List<string> examsId { get; set; }
     }
 }

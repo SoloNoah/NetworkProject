@@ -157,18 +157,20 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="dal\CoursesDal.cs" />
+    <Compile Include="dal\FacultyMemeberDal.cs" />
     <Compile Include="dal\LectDal.cs" />
     <Compile Include="dal\StudentCoursesDal.cs" />
     <Compile Include="dal\ExamsDal.cs" />
     <Compile Include="dal\LecturerGotStudsDal.cs" />
+    <Compile Include="dal\StudentDal.cs" />
     <Compile Include="dal\UserDal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Courses.cs" />
+    <Compile Include="Models\FacultyMember.cs" />
     <Compile Include="Models\Lecturer.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentCourses.cs" />
@@ -177,6 +179,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="viewModel\CoursesViewModel.cs" />
     <Compile Include="viewModel\CoursesUserViewModel.cs" />
+    <Compile Include="viewModel\FacultyMemberViewModel.cs" />
     <Compile Include="viewModel\StudentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +187,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\footer.PNG" />
+    <Content Include="Content\pyramid.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -193,6 +198,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\logo.webp" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -214,20 +220,23 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\login.cshtml" />
     <Content Include="Views\Login\Student.cshtml" />
     <Content Include="Views\Login\Lecturer.cshtml" />
     <Content Include="Views\Login\FaMember.cshtml" />
-    <Content Include="Views\Login\ShowCourses.cshtml" />
-    <Content Include="Views\Login\enterCourse.cshtml" />
+    <Content Include="Views\Login\ShowLectCourses.cshtml" />
+    <Content Include="Views\Login\EnterCourse.cshtml" />
     <Content Include="Views\Login\ShowExams.cshtml" />
     <Content Include="Views\Login\ShowStudsForLect.cshtml" />
+    <Content Include="Views\Login\ShowStudentsForCourse.cshtml" />
+    <Content Include="Views\Login\ManageStudents.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Login\ShowGrades.cshtml" />
+    <Content Include="Views\Login\ShowCourses.cshtml" />
+    <Content Include="Views\Login\UpdateGradesFaculty.cshtml" />
+    <Content Include="Views\Login\ManageExams.cshtml" />
+    <Content Include="Views\Login\ManageLecturer.cshtml" />
+    <Content Include="Views\Login\ManageCourses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

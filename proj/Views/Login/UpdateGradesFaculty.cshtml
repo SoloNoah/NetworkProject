@@ -1,0 +1,47 @@
+﻿@using proj.Models
+
+@{
+    ViewBag.Title = "UpdateGradesFaculty";
+}
+
+<h2>UpdateGradesFaculty</h2>
+
+@if (Model.allStudentsCourses != null)
+{
+    <table class="table table-bordered table-responsive table-hover">
+        <tr bgcolor="#a2b9bc">
+            <th>CourseId </th>
+            <th>Username </th>
+            <th>ExamA</th>
+            <th>ExamB </th>
+
+        </tr>
+
+        @foreach (StudentCourses obj in Model.allStudentsCourses)
+        {
+            <tr bgcolor="#b2ad7f">
+                <td>@obj.CourseId</td>
+                <td>@obj.Username</td>
+                <td>@obj.ExamA</td>
+                <td>@obj.ExamB</td>
+            </tr>
+        }
+    </table>
+
+    <form method="post" action="UpdateGrade" onsubmit="SetData()">
+        <h2>Add grade to student: </h2>
+        <label>Username: </label> <input class="username" id="Username" name="Username" type="text" />
+        <br />
+        <label>CourseId: </label> <input class=" CourseId" id="CourseId" name="CourseId" type="text" />
+        <br />
+        <label>Moed: </label>
+        <br />
+        <select name="moed" id="moed">
+            <option value="a">A</option>
+            <option value="b">B</option>
+        </select>
+        <label>Grade: </label> <input class="Grade" id="Grade" name="Grade" type="text" />
+        <input class="submitGradeUpgrade" id="submitGradeUpgrade" type="submit" value="Update" />
+    </form>
+
+}

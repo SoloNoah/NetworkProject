@@ -13,19 +13,31 @@ namespace proj.Models
         [Required]
         [Key, Column(Order = 0)]
         public string CourseId { get; set; }
+
         [Required]
-        [Key, Column(Order = 1)]
-        [StringLength(15, MinimumLength = 2, ErrorMessage = "Course name must be between 2 and 15")]
+        [Column(Order = 1)]
         public string CourseName { get; set; }
+
         [Required]
         [Column(Order = 2)]
         public string Day { get; set; }
+
         [Required]
         [Column(Order = 3)]
-        public string Hour { get; set; }  
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
+        public TimeSpan SHour { get; set; }  
+
         [Required]
         [Column(Order = 4)]
+  
         public string Room { get; set; }
-       
+
+        [Required]
+        [Column(Order = 5)]
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
+        public TimeSpan EHour { get; set; }
+
     }
 }

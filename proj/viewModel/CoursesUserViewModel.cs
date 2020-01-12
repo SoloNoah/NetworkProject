@@ -9,6 +9,6 @@ namespace proj.viewModel
     public class CoursesUserViewModel
     {
         public StudentCourses studentCourses { get; set; }
-        public List<StudentCourses> courses { get; set; }
+        public List<StudentCourses> allStudentsCourses { get; set; }
     }
 }

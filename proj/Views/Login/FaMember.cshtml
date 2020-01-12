@@ -2,14 +2,183 @@
 @{
     ViewBag.Title = "FaMember";
 }
+<style>
 
-<h2>FaMember</h2>
+    body {
+        background-color: #31302a;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 
-<form action="getPermission" method="post">
-    <input id="ManageCourses" type="submit" value="Manage Courses" />
-    <br />
-    <input id="ManangeExams" type="submit" value="Manange Exams" />
-    <br />
-    <input id="UpdateGrades" type="submit" value="Update Grades" />
+    .holder {
+        margin-top: 130px;
+        width: 100%;
+        height: 340px;
+        background-color: grey;
+    }
 
-</form>
+    .faForm {
+        margin: 0 auto;
+        border: 15px;
+        width: 100%;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .manageCLBTN, .manageCSBTn, .updateGradeBtn, .manageExamsBtn, .manageScheduleBtn {
+        background-color: forestgreen;
+        color: white;
+        margin: 5px;
+        text-align: center;
+        padding: 10px 24px;
+        width: 150px;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        border-radius: 8px;
+        border: 2px solid;
+        font-size: 16px;
+        text-align: center;
+    }
+
+        .manageCLBTN:hover, .manageCSBTn:hover, .updateGradeBtn:hover, .manageExamsBtn:hover, .manageScheduleBtn:hover {
+            background-color: white;
+            color: #31302a;
+            border: 2px solid black;
+        }
+
+    .footer {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+    }
+
+    .footerImg {
+        position: relative;
+        display: block;
+        float: left;
+    }
+
+    h2 {
+        padding-left: 150px;
+        padding-top: 50px;
+    }
+</style>
+
+<div class="holder">
+    <h2> Welcome @Session["firstname"].ToString(),</h2>
+    <form class="faForm" action="FaMemberActions" method="post">
+        <input class="manageCSBTn" id="ManageCourses" type="submit" name="ManageCoursesAndStudents" value="Manage Courses" />
+        <br />
+        <input class="manageCLBTN" id="ManangeLects" type="submit" name="ManageCoursesAndLects" value="Manange Lects" />
+        <br />
+        <input class="manageExamsBtn" id="ManangeExams" type="submit" name="ManageExams" value="Manange Exams" />
+        <br />
+        <input class="manageScheduleBtn" id="ManageSchedule" type="submit" name="ManageCourseSchedule" value="Manange Schedule" />
+        <br />
+        <input class="updateGradeBtn" id="UpdateGrades" type="submit" name="UpdateGrades" value="Update Grades" />
+    </form>
+</div>
+<footer class="footer">
+    <img class="footerImg" src="@Url.Content("~/Content/footer.png")" align="bottom" style=" width: 100%;" />
+</footer>
+@*lecturer-course*@
+@if ((string)Session["result"] == "Operation failed")
+{
+    <script type="text/javascript">
+        alert("the lecturer cannot be assinged to this course!");
+    </script>
+    Session["result"] = "";
+}
+@if ((string)Session["rowExists"] == "Lecturer assinged")
+{
+    <script type="text/javascript">
+        alert("the lecturer is succsessfuly assinged to this course!");
+    </script>
+    Session["rowExists"] = "";
+}
+@if ((string)Session["rowExists"] == "Lecturer already assinged")
+{
+    <script type="text/javascript">
+        alert("the lecturer cannot be assinged to this course!");
+    </script>
+    Session["rowExists"] = "";
+}
+
+
+
+@*student-course*@
+@if ((string)Session["rowExists"] == "student already assinged")
+{
+    <script type="text/javascript">
+        alert("the student cannot be assinged to this course!");
+    </script>
+    Session["rowExists"] = "";
+}
+@if ((string)Session["result"] == "success")
+{
+    <script type="text/javascript">
+        alert("data saved-course added to student");
+    </script>
+    Session["result"] = "";
+}
+@if ((string)Session["result"] == "Operation failed for student")
+{
+    <script type="text/javascript">
+        alert("failed-course was not added to student due to hours");
+    </script>
+    Session["result"] = "";
+}
+
+
+
+
+
+
+
+
+@*schedule-course*@
+@if ((string)Session["courseSaved"] == "course clashes with other courses!")
+{
+    <script type="text/javascript">
+        alert("failed-course was not added - clashing with other course");
+    </script>
+    Session["courseSaved"] = "";
+}
+@if ((string)Session["courseSaved"] == "the course has been added!")
+{
+    <script type="text/javascript">
+        alert("course was added to schedule");
+    </script>
+    Session["courseSaved"] = "";
+}
+@if ((string)Session["coursedeleted"] == "the course has been deleted!")
+{
+    <script type="text/javascript">
+        alert("the course has been deleted!");
+    </script>
+    Session["courseSaved"] = "";
+}
+
+
+@*exam-schedule*@
+@if ((string)Session["examSaved"] == "exam clashes with other exams!")
+{
+    <script type="text/javascript">
+        alert("exam clashes with other exams!");
+    </script>
+    Session["examSaved"] = "";
+}
+@if ((string)Session["examSaved"] == "the exam has been added!")
+{
+    <script type="text/javascript">
+        alert("the exam has been added!");
+    </script>
+    Session["examSaved"] = "";
+}
+@if ((string)Session["examdeleted"] == "the exam has been deleted!")
+{
+    <script type="text/javascript">
+        alert("the exam has been deleted!");
+    </script>
+    Session["examdeleted"] = "";
+}

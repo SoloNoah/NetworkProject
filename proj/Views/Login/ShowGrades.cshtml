@@ -1,0 +1,28 @@
+﻿@using proj.Models
+@{
+    ViewBag.Title = "ShowGrades";
+}
+
+<h2>ShowGrades</h2>
+
+<table class="table table-bordered table-responsive table-hover">
+    <tr bgcolor="#a2b9bc">
+        <th>Course Id </th>
+        <th>Username </th>
+        <th>Moed A</th>
+        <th>Moed B</th>
+
+    </tr>
+    @foreach (StudentCourses obj in Model.courses)
+    {
+        <tr bgcolor="#b2ad7f">
+            <td>@obj.CourseId</td>
+            <td>@obj.Username</td>
+            <td>@obj.ExamA</td>
+            <td>@obj.ExamB</td>    
+        </tr>
+    }
+
+
+</table>
+

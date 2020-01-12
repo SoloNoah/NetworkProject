@@ -2,30 +2,89 @@
 @{
     ViewBag.Title = "ShowExams";
 }
+<style>
 
-<div><b>Exams</b><br /></div>
-<table class="table table-bordered table-responsive table-hover">
-    <tr bgcolor="#a2b9bc">
-        <th>Moed</th>
-        <th>Course Id </th>
-        <th>Course Name </th>
-        <th>Day</th>
-        <th>Hour </th>
-        <th>Room </th>
-        
-
-    </tr>
-    @foreach (Exams obj in Model.exams)
-    {
-    <tr bgcolor="#b2ad7f">
-        <td>@obj.Moed</td>
-        <td>@obj.CourseId</td>
-        <td>@obj.CourseName</td>
-        <td>@obj.Day</td>
-        <td>@obj.Hour</td>
-        <td>@obj.Room</td>
-
-
-    </tr>
+    body {
+        background-color: #31302a;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
     }
-</table>
+
+    .holder {
+        margin-top: 130px;
+        width: 100%;
+        height: 340px;
+        background-color: grey;
+    }
+
+    .courses {
+    }
+
+    .footer {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+    }
+
+    .footerImg {
+        position: relative;
+        display: block;
+        float: left;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    th {
+        height: 50px;
+        padding: 15px;
+        text-align: left;
+    }
+
+    tr {
+        padding: 25px;
+        text-align: left;
+    }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+    h2 {
+        padding-left: 150px;
+        padding-top: 50px;
+    }
+</style>
+<div class="holder">
+    <table align="center">
+        <tr bgcolor="#a2b9bc">
+            <th>Course Id </th>
+            <th>Course Name </th>
+            <th>Moed</th>
+            <th>Date</th>
+            <th>SHour </th>
+            <th>EHour </th>
+            <th>Room </th>
+
+
+        </tr>
+        @foreach (Exams obj in Model.exams)
+        {
+        <tr bgcolor="#b2ad7f">
+            <td>@obj.CourseId</td>
+            <td>@obj.CourseName</td>
+            <td>@obj.Moed</td>
+            <td>@obj.ExamDate.ToShortDateString()</td>
+            <td>@obj.SHour</td>
+            <td>@obj.EHour</td>
+            <td>@obj.Room</td>
+
+
+        </tr>
+        }
+    </table>
+</div>
+<footer class="footer">
+    <img class="footerImg" src="@Url.Content("~/Content/footer.png")" align="bottom" style=" width: 100%;" />
+</footer>

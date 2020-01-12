@@ -11,7 +11,6 @@ namespace proj.dal
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer<StudentCoursesDal>(null);
-
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<StudentCourses>().ToTable("tblStudentCourses");
         }

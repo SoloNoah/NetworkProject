@@ -10,28 +10,33 @@ namespace proj.Models
     [Table("tblDeptExams")]
     public class Exams
     {
+       
         [Required]
         [Key, Column(Order = 0)]
-        public string Moed { get; set; }
-
-        [Required]
-        [Key, Column(Order = 1)]
         public string CourseId { get; set; }
 
+       
         [Required]
-        [Column(Order = 2)]
-        [StringLength(15, MinimumLength = 2, ErrorMessage = "Course name must be between 2 and 15")]
         public string CourseName { get; set; }
 
-        [Column(Order = 3)]
-        public string Day { get; set; }
-
-        [Column(Order = 4)]
         [Required]
-        public string Hour { get; set; }
+        [Key, Column(Order = 2)]
+        public string Moed { get; set; }
+
+        [Key, Column(Order = 3)]
+        public DateTime ExamDate { get; set; }
 
         [Required]
-        [Column(Order = 5)]
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
+        public TimeSpan SHour { get; set; }
+
+        [Required]
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
+        public TimeSpan EHour { get; set; }
+
+        [Required]
         public string Room { get; set; }
     }
 }
