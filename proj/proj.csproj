@@ -229,14 +229,14 @@
     <Content Include="Views\Login\ShowExams.cshtml" />
     <Content Include="Views\Login\ShowStudsForLect.cshtml" />
     <Content Include="Views\Login\ShowStudentsForCourse.cshtml" />
-    <Content Include="Views\Login\ManageStudents.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Login\ShowGrades.cshtml" />
     <Content Include="Views\Login\ShowCourses.cshtml" />
     <Content Include="Views\Login\UpdateGradesFaculty.cshtml" />
-    <Content Include="Views\Login\ManageExams.cshtml" />
     <Content Include="Views\Login\ManageLecturer.cshtml" />
-    <Content Include="Views\Login\ManageCourses.cshtml" />
+    <Content Include="Views\Login\‏‏ManageStudents.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Login\ManageExams.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -537,7 +537,7 @@ namespace proj.Controllers
             //extracting the info from faMember inputs.
             string moed = Request.Form["Moed"].ToString();
             string courseid = courseId;
-            string date = Request.Form["Day"].ToString();
+            string date = Request.Form["Date"].ToString();
             string Room = Request.Form["Room"].ToString();
             string StartHour = Request.Form["SHour"].ToString();
             TimeSpan SHour = TimeSpan.Parse(StartHour);

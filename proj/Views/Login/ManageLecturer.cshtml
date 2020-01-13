@@ -16,14 +16,14 @@
     </tr>
     @foreach (Lecturer obj in Model.faLecturers)
     {
-        <tr bgcolor="#b2ad7f">
-            <td>@obj.LectId</td>
-            <td>@obj.Username</td>
-            <td>@obj.LectName</td>
-            <td>@obj.LectLastName</td>
-            <td>@obj.CourseId</td>
-            <td>@obj.CourseName</td>
-        </tr>
+    <tr bgcolor="#b2ad7f">
+        <td>@obj.LectId</td>
+        <td>@obj.Username</td>
+        <td>@obj.LectName</td>
+        <td>@obj.LectLastName</td>
+        <td>@obj.CourseId</td>
+        <td>@obj.CourseName</td>
+    </tr>
     }
 </table>
 <table class="table table-bordered table-responsive table-hover">
@@ -37,14 +37,14 @@
     </tr>
     @foreach (Courses obj in Model.faCourses)
     {
-        <tr bgcolor="#b2ad7f">
-            <td>@obj.CourseId</td>
-            <td>@obj.CourseName</td>
-            <td>@obj.Day</td>
-            <td>@obj.SHour</td>
-            <td>@obj.Room</td>
-            <td>@obj.EHour</td>
-        </tr>
+    <tr bgcolor="#b2ad7f">
+        <td>@obj.CourseId</td>
+        <td>@obj.CourseName</td>
+        <td>@obj.Day</td>
+        <td>@obj.SHour</td>
+        <td>@obj.Room</td>
+        <td>@obj.EHour</td>
+    </tr>
     }
 </table>
 
@@ -53,14 +53,14 @@
     <select name="LectId" id="LectId">
         @foreach (int obj in Model.faLecturersID)
         {
-            <option value=@obj>@obj</option>
+        <option value=@obj>@obj</option>
         }
     </select>
     <h3>Select course name</h3>
     <select name="courseName" id="courseName">
         @foreach (Courses obj in Model.faCourses)
         {
-            <option value=@obj.CourseName>@obj.CourseName</option>
+        <option value=@obj.CourseName>@obj.CourseName</option>
         }
     </select>
     <input type="submit" value="assign" />
